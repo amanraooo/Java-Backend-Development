@@ -1,6 +1,6 @@
 package service;
 
-import config.DbConfig;
+import config.DBconfig;
 import entity.Invoice;
 
 import java.sql.*;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class InvoiceService {
     public void addInvoice(Invoice invoice) throws SQLException {
-        Connection conn = DbConfig.getConnection();
+        Connection conn = DBconfig.getConnection();
         PreparedStatement ps = conn.prepareStatement("INSERT INTO invoices (customer_id, vehicle_id, service_id) VALUES(?,?,?)");
         ps.setInt(1, invoice.getCustomerId());
         ps.setInt(2, invoice.getVehicleId());
@@ -21,7 +21,7 @@ public class InvoiceService {
 
     public List<Invoice> getAllInvoices() throws SQLException {
         List<Invoice> list = new ArrayList<>();
-        Connection conn = DbConfig.getConnection();
+        Connection conn = DBconfig.getConnection();
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * from invoices");
 
