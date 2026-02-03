@@ -1,10 +1,8 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.util.Scanner;
 
-public class InserUsingPreparedDemo {
+public class InsertUsingPreparedDemo {
 
     /*1. load the driver class
       2. Get connection from db
