@@ -20,18 +20,32 @@ public class App {
                 case 1 :
                     System.out.print("Customer name: ");
                     String name = sc.next();
+
                     System.out.print("phone: ");
                     String phone = sc.next();
-                    service.customerService.addCustomer(new Customer(0, name, phone));
+
+                    Customer customer =
+                            service.customerService.addCustomer(new Customer(0, name, phone));
+
                     System.out.println("Enter Vehicle number: ");
                     String vehicleNum = sc.next();
+
                     System.out.println("Enter Vehicle model: ");
                     String model = sc.next();
-                    Customer customerBasesOnNumber = service.customerService.getAllCustomersBasedOnNum(phone);
-                    vehicle vehicle = new vehicle(0,0, vehicleNum, model);
+
+                    vehicle vehicle = new vehicle(
+                            customer.getId(),
+                            0,
+                            vehicleNum,
+                            model
+                    );
+
                     VehicleService vehicleService = new VehicleService();
                     vehicleService.addVehicle(vehicle);
+
+                    System.out.println("Customer and Vehicle added successfully");
                     break;
+
                 case 2:
                     System.out.print("Enter customer ID: ");
                     int cid = sc.nextInt();

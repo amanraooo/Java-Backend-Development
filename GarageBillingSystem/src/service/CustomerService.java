@@ -8,15 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
-    public void addCustomer(Customer customer) throws SQLException {
+    public Customer addCustomer(Customer customer) throws SQLException {
         Connection conn = DBconfig.getConnection();
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO customers (name, phone) VALUES(?,?)");
+
+        PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO customers (name, phone) VALUES (?, ?)",
+                Statement.RETURN_GENERATED_KEYS
+        );
+
         ps.setString(1, customer.getName());
         ps.setString(2, customer.getPhone());
         ps.executeUpdate();
+
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs.next()) {
+            customer.setId(rs.getInt(1));
+        }
+
         ps.close();
         conn.close();
+
+        return customer;
     }
+
 
     public List<Customer> getAllCustomers() throws SQLException {
         List<Customer> list = new ArrayList<>();
