@@ -8,31 +8,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerService {
-
     public void addCustomer(Customer customer) throws SQLException {
         Connection conn = DBconfig.getConnection();
-        PreparedStatement ps =
-                conn.prepareStatement("insert into customers (name,phone) values (?,?)");
-        ps.setString(1,customer.getName());
-        ps.setString(2,customer.getName());
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO customers (name, phone) VALUES(?,?)");
+        ps.setString(1, customer.getName());
+        ps.setString(2, customer.getPhone());
         ps.executeUpdate();
         ps.close();
         conn.close();
-
     }
 
-    public List<Customer> getAllCustomers() throws SQLException{
+    public List<Customer> getAllCustomers() throws SQLException {
         List<Customer> list = new ArrayList<>();
         Connection conn = DBconfig.getConnection();
-        Statement st= conn.createStatement();
-        ResultSet rs = st.executeQuery("Select * from customers");
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * from customers");
 
-        while(rs.next()){
-            list.add(new
-                    Customer(rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("phone")));
+        while (rs.next()) {
+            list.add(new Customer(rs.getInt("id"),
+                    rs.getString("name"), rs.getString("phone")));
         }
+
         return list;
+    }
+
+    public Customer getAllCustomersBasedOnNum(String number) throws SQLException {
+        Customer customer = new Customer();
+        Connection conn = DBconfig.getConnection();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * from customers where phone = " + number);
+
+        while (rs.next()) {
+            customer = new Customer(rs.getInt("id"),
+                    rs.getString("name"), rs.getString("phone"));
+        }
+
+        return customer;
     }
 }
