@@ -11,6 +11,10 @@ public class Customer {
         this.phone = phone;
     }
 
+    public Customer() {
+
+    }
+
     public int getId() {
         return id;
     }
