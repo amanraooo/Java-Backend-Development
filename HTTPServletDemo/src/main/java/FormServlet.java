@@ -1,3 +1,5 @@
-public class FormServlet extends HttpServ{
+import jakarta.servlet.http.HttpServlet;
+
+public class FormServlet extends HttpServlet {
 
 }
