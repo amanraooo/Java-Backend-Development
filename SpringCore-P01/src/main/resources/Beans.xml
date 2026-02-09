@@ -4,4 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        https://www.springframework.org/schema/beans/spring-beans.xsd">
     <!-- Define beans here -->
+    <bean id="petrolEng" class="org.cfs.PetrolEngine" scope="prototype"/>
+    <bean id="car" class="org.amn.Car">
+        <!--<property name="engine" ref="petrolEng"></property> -->
+        <constructor-arg name="engine" ref="petrolEng"></constructor-arg>
+    </bean>
 </beans>
