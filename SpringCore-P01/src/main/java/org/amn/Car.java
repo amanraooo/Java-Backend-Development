@@ -1,4 +1,4 @@
-package org.cfs;
+package org.amn;
 
 public class Car {
 
