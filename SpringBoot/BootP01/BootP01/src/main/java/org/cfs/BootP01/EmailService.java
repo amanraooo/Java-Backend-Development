@@ -1,9 +1,11 @@
-package org.cfs.BootP01;
+package com.cfs.BootP01;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class EmailService implements MessageService{
-
 	@Override
-	public String getMessage() {
-		return "Email : you hva recieved a new message.";
+	public String sendMessage() {
+		return "Email: you have got new message!";
 	}
 }
