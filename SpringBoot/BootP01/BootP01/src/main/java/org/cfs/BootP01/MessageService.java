@@ -1,5 +1,5 @@
-package org.cfs.BootP01;
+package com.cfs.BootP01;
 
-public interface MessageService{
-String getMessage();
+public interface MessageService {
+	String sendMessage();
 }
