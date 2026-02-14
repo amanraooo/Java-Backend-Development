@@ -37,14 +37,37 @@ public class BookController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<void> updateBook(@PathVariable Long id , @RequestBody Book book){
+	public ResponseEntity<Void> updateBook(@PathVariable Long id , @RequestBody Book book){
 		Book existingBook = bookDB.get(id);
 		if(existingBook == null){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
 		bookDB.put(id,book);
-		return ResponseEntity.ok(book);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+	}
+
+	@PatchMapping("/{id}/price")
+	public ResponseEntity<Book> setPrice(@PathVariable Long id , @RequestBody Double  newPrice){
+		Book existingBook = bookDB.get(id);
+		if(existingBook == null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+		existingBook.setPrice(newPrice);
+		return ResponseEntity.ok(existingBook);
+
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Book> DeleteBook(@PathVariable Long id ){
+		Book existingBook = bookDB.remove(id);
+		if(existingBook == null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+		return ResponseEntity.noContent().build();
 
 	}
 }
