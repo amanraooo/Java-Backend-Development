@@ -26,4 +26,13 @@ public class BookController {
 		bookDB.put(book.getId(),book);
 		return ResponseEntity.status(HttpStatus.CREATED).body(book);
 	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Book> getBookById(@PathVariable Long id){
+		Book book = bookDB.get(id);
+		if(book == null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.ok(book);
+	}
 }
