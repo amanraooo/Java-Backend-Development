@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 public class StudentRepo {
 
 	public String getStudentData(){
-		return "This is student  data";
+		return "This is student data";
 	}
 }
