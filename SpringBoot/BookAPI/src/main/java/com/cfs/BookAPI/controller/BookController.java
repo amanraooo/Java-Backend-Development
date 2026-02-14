@@ -35,4 +35,16 @@ public class BookController {
 		}
 		return ResponseEntity.ok(book);
 	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<void> updateBook(@PathVariable Long id , @RequestBody Book book){
+		Book existingBook = bookDB.get(id);
+		if(existingBook == null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+
+		bookDB.put(id,book);
+		return ResponseEntity.ok(book);
+
+	}
 }
