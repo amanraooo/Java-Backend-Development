@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
 
 	@GetMapping("/welcome")
-	public String welcome(){
+	public String dataFetchFromDB(){
 
 		return  "You are welcome..";
 	}
