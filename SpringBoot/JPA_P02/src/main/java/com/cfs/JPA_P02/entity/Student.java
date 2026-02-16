@@ -1,9 +1,12 @@
 package com.cfs.JPA_P02.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Student {
@@ -19,6 +22,15 @@ public class Student {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id", unique=true)
 	private Teacher teacher;
+
+	@ManyToMany
+	@JoinTable(
+			name="student_course",
+			joinColumns = @JoinColumn(name="student_id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id")
+	)
+	@JsonIgnoreProperties("student")
+	public Set<Course> courses=new HashSet<>();
 
 	public Long getId() {
 		return id;
