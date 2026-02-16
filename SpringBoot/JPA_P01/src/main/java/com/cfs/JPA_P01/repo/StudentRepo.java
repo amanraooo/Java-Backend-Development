@@ -1,4 +1,10 @@
 package com.cfs.JPA_P01.repo;
 
-public interface StudentRepo {
+import com.cfs.JPA_P01.entity.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface StudentRepo extends JpaRepository<Student,Long> {
+
 }
