@@ -30,4 +30,10 @@ public class StudentController {
 	public Student getStudentById(@PathVariable Long id){
 		return studentRepo.findById(id).orElse(null);
 	}
+
+	@PutMapping("/{id}")
+	public Student updateStudent(@PathVariable Long id, @RequestBody ){
+		return studentRepo.findById(id).orElse(null);
+	}
+
 }
