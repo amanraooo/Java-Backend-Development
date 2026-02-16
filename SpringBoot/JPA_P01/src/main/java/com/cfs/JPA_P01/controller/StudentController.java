@@ -31,9 +31,40 @@ public class StudentController {
 		return studentRepo.findById(id).orElse(null);
 	}
 
+//	another way of doing put mapping
 	@PutMapping("/{id}")
-	public Student updateStudent(@PathVariable Long id, @RequestBody ){
-		return studentRepo.findById(id).orElse(null);
+	public Student updateStudent(@PathVariable Long id, @RequestBody Student student){
+
+		Student s = studentRepo.findById(id)
+				.orElseThrow(()-> new RuntimeException("Student not found"));
+
+		s.setName(student.getName());
+		s.setEmail(student.getEmail());
+
+		return studentRepo.save(s);
+	}
+
+	//	another way of doing patch mapping
+	@PatchMapping("/{id}")
+	public Student updateStudentName(@PathVariable Long id, @RequestParam String name){
+
+		Student s = studentRepo.findById(id)
+				.orElseThrow(()-> new RuntimeException("Student not found"));
+
+		s.setName(name);
+
+		return s;
+	}
+
+	@PatchMapping("/{id}")
+	public Student updateStudentEmail(@PathVariable Long id, @RequestParam String email){
+
+		Student s = studentRepo.findById(id)
+				.orElseThrow(()-> new RuntimeException("Student not found"));
+
+		s.setEmail(email);
+
+		return s;
 	}
 
 }
