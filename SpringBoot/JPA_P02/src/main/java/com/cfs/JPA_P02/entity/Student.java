@@ -16,7 +16,7 @@ public class Student {
 	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
 	private Laptop laptop;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "teacher_id", unique=true)
 	private Teacher teacher;
 
