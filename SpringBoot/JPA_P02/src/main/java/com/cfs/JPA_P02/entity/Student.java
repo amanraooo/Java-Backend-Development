@@ -16,6 +16,10 @@ public class Student {
 	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
 	private Laptop laptop;
 
+	@ManyToOne
+	@JoinColumn(name = "teacher_id", unique=true)
+	private Teacher teacher;
+
 	public Long getId() {
 		return id;
 	}
