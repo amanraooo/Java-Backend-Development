@@ -46,7 +46,7 @@ public class StudentController {
 
 	//	another way of doing patch mapping
 	@PatchMapping("/{id}/name")
-	public Student updateStudentName(@PathVariable Long id, @RequestParam String name){
+	public Student updateStudentName(@RequestParam Long id, @RequestParam String name){
 
 		Student s = studentRepo.findById(id)
 				.orElseThrow(()-> new RuntimeException("Student not found"));
@@ -57,7 +57,7 @@ public class StudentController {
 	}
 
 	@PatchMapping("/{id}/email")
-	public Student updateStudentEmail(@PathVariable Long id, @RequestParam String email){
+	public Student updateStudentEmail(@RequestParam Long id, @RequestParam String email){
 
 		Student s = studentRepo.findById(id)
 				.orElseThrow(()-> new RuntimeException("Student not found"));
