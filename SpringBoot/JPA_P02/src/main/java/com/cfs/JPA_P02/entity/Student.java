@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 @Entity
 public class Student {
 
@@ -12,7 +13,7 @@ public class Student {
 	private Long id;
 	private String name;
 
-	@OneToOne(mappedBy = "student", cascade = CascadeType.All)
+	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
 	private Laptop laptop;
 
 	public Long getId() {
