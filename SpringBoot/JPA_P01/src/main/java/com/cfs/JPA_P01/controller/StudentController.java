@@ -45,7 +45,7 @@ public class StudentController {
 	}
 
 	//	another way of doing patch mapping
-	@PatchMapping("/{id}/name")
+	@PatchMapping("/update-name")
 	public Student updateStudentName(@RequestParam Long id, @RequestParam String name){
 
 		Student s = studentRepo.findById(id)
@@ -56,7 +56,7 @@ public class StudentController {
 		return studentRepo.save(s);
 	}
 
-	@PatchMapping("/{id}/email")
+	@PatchMapping("/update-email")
 	public Student updateStudentEmail(@RequestParam Long id, @RequestParam String email){
 
 		Student s = studentRepo.findById(id)
