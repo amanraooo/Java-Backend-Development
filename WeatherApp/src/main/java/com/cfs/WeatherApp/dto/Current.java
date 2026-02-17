@@ -30,7 +30,7 @@ public class Current{
 	public double uv;
 	public double gust_mph;
 	public double gust_kph;
-	public AirQuality air_quality;
+	//public AirQuality air_quality;
 	public double short_rad;
 	public double diff_rad;
 	public double dni;
