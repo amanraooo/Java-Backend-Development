@@ -1,5 +1,6 @@
 package com.cfs.WeatherApp.controller;
 import com.cfs.WeatherApp.dto.Root;
+import com.cfs.WeatherApp.dto.WeatherResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.cfs.WeatherApp.service.WeatherService;
@@ -17,7 +18,7 @@ public class Controller {
 	}
 
 	@GetMapping("my/{city}")
-	public Root getWeather(@PathVariable String city)
+	public WeatherResponse getWeather(@PathVariable String city)
 	{
 		return service.getData(city);
 	}

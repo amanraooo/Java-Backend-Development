@@ -1,5 +1,6 @@
 package com.cfs.WeatherApp.service;
 import com.cfs.WeatherApp.dto.Root;
+import com.cfs.WeatherApp.dto.WeatherResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,9 +21,16 @@ public class WeatherService {
 		return "good";
 	}
 
-	public Root getData(String city){
+	public WeatherResponse getData(String city){
 		String url = apiUrl + "?key="+apiKey+"&q="+city;
 		Root response = template.getForObject(url,Root.class);
-		return response;
+		WeatherResponse weatherResponse = new WeatherResponse();
+
+		weatherResponse.setCity(response.getLocation().name);
+		weatherResponse.setCountry(response.getLocation().getCountry());
+		weatherResponse.setCountry(response.getLocation().getRegion());
+
+		String condition = response.getCurrent().getCondition().getText();
+		//weatherResponse.setCondition(response.getCurrent().getCon);
 	}
 }
