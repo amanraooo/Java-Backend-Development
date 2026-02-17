@@ -30,7 +30,9 @@ public class WeatherService {
 		weatherResponse.setCountry(response.getLocation().getCountry());
 		weatherResponse.setCountry(response.getLocation().getRegion());
 
-		String condition = response.getCurrent().getCondition().getText();
-		//weatherResponse.setCondition(response.getCurrent().getCon);
+		weatherResponse.setCondition(response.getCurrent().getCondition().getText());
+		weatherResponse.setTemperature(response.getCurrent().getTemp_c());
+
+		return weatherResponse;
 	}
 }
