@@ -1,15 +1,17 @@
 package com.cfs.WeatherApp.dto;
 
+
 public class Root{
 	public Location location;
 	public Current current;
+	public Forecast forecast;
 
-	public Root(Location location, Current current) {
-		this.location = location;
-		this.current = current;
+	public Forecast getForecast() {
+		return forecast;
 	}
 
-	public Root() {
+	public void setForecast(Forecast forecast) {
+		this.forecast = forecast;
 	}
 
 	public Location getLocation() {
