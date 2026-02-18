@@ -28,7 +28,7 @@ public class WeatherService {
 
 		weatherResponse.setCity(response.getLocation().name);
 		weatherResponse.setCountry(response.getLocation().getCountry());
-		weatherResponse.setCountry(response.getLocation().getRegion());
+		weatherResponse.setRegion(response.getLocation().getRegion());
 
 		weatherResponse.setCondition(response.getCurrent().getCondition().getText());
 		weatherResponse.setTemperature(response.getCurrent().getTemp_c());
