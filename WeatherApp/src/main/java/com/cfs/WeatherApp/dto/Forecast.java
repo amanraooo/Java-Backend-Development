@@ -1,6 +1,5 @@
 package com.cfs.WeatherApp.dto;
 
-
 import java.util.ArrayList;
 
 public class Forecast{
