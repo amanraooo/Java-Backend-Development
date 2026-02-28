@@ -22,5 +22,11 @@ public class BankController {
 		return accountService.closeAccount();
 	}
 
+	@GetMapping("/about")
+	public String about()
+	{
+		return "LUNCH TIME";
+	}
+
 
 }
