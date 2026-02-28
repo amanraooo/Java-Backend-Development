@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccountService {
 
-	public String AccountService(){
+	public String getBalance(){
 		return "Your balance is = 8000";
 	}
 
