@@ -15,6 +15,6 @@ public interface ShowRepository extends JpaRepository<Show,Long>
 
 	List<Show> findByStartTimeBetween(LocalDateTime start,LocalDateTime end);
 
-	List<Show> findByMovie_IdAndScreen_Theater_City(Long moiveId,String city);
+	List<Show> findByMovie_IdAndScreen_Theater_City(Long movieId,String city);
 
 }
