@@ -29,7 +29,7 @@ public class Show {
 
 	@ManyToOne
 	@JoinColumn(name = "movie_id",nullable = false)
-	private Movie movie;
+	private com.cfs.bms.model.Movie movie;
 
 	@ManyToOne
 	@JoinColumn(name = "screen_id",nullable = false)
