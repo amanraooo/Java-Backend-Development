@@ -1,5 +1,6 @@
 package com.cfs.bms.model;
 
+import com.cfd.bms.model.Show;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
