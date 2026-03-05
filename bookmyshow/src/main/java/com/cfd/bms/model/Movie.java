@@ -1,4 +1,4 @@
-package com.cfs.bms.model;
+package com.cfd.bms.model;
 
 import com.cfd.bms.model.Show;
 import jakarta.persistence.*;
