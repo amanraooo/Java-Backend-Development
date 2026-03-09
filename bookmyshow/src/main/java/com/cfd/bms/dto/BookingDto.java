@@ -1,4 +1,4 @@
-package com.cfs.bms.dto;
+package com.cfd.bms.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
