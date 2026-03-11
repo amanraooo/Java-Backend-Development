@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BookingRequestDto {
 	private Long userId;
-	protected List<Long> seatIds;
+	protected Long showId;
+	private List<Long> seatIds;
 	private String paymentMethod;
 }
