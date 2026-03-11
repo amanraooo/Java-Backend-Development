@@ -4,6 +4,7 @@ import com.cfd.bms.dto.BookingDto;
 import com.cfd.bms.dto.BookingRequestDto;
 import com.cfd.bms.exception.ResourceNotFoundException;
 import com.cfd.bms.exception.SeatUnavailableException;
+import com.cfd.bms.repository.BookingRepository;
 import com.cfd.bms.repository.ShowRepository;
 import com.cfd.bms.repository.ShowSeatRepository;
 import com.cfd.bms.repository.UserRepository;
@@ -25,9 +26,11 @@ public class BookingService {
 	@Autowired
 	private ShowRepository showRepository;
 
-
 	@Autowired
 	private ShowSeatRepository showSeatRepository;
+
+	@Autowired
+	private BookingRepository bookingRepository;
 
 	public  BookingDto createBooking(BookingRequestDto bookingRequest) {
 		User user = userRepository.findById(bookingRequest.getUserId())
@@ -59,5 +62,23 @@ public class BookingService {
 		payment.setTransactionId(UUID.randomUUID().toString());
 
 
+		Booking booking = new Booking();
+		booking.setUser(user);
+		booking.setShow(show);
+		booking.setBookingTime(LocalDateTime.now());
+		booking.setStatus("CONFIRMED");
+		booking.setTotalAmount(totalAmount);
+		booking.setBookingNumber(UUID.randomUUID().toString());
+		booking.setPayment(payment);
+
+		Booking saveBooking = bookingRepository.save(booking);
+
+		selectedSeats.forEach(seat->
+				{
+					seat.getStatus("BOOKED");
+					seat.setBooking(saveBooking);
+				}
+				);
+		showSeatRepository.saveAll(selectedSeats);
 	}
 }
