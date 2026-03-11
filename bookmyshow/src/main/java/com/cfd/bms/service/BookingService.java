@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookingService {
 
-	public static BookingDto createBooking(@Valid BookingRequestDto bookingRequest) {
+	public  BookingDto createBooking(@Valid BookingRequestDto bookingRequest) {
+
 	}
 }

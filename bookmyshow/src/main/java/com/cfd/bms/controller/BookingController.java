@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/bookings")
 public class BookingController {
 
-	@Autowired
-	private BookingRepository bookingRepository;
 
 	@Autowired
-	private BookingService bookingService;
+	BookingService bookingService;
 
 	@PostMapping
 	public ResponseEntity<BookingDto> createBooking(@Valid @RequestBody BookingRequestDto bookingRequest){
