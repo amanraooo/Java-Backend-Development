@@ -8,6 +8,7 @@ import com.cfd.bms.repository.ShowRepository;
 import com.cfd.bms.repository.ShowSeatRepository;
 import com.cfd.bms.repository.UserRepository;
 import com.cfd.bms.model.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,7 @@ public class BookingService {
 	@Autowired
 	private BookingRepository bookingRepository;
 
+	@Transactional
 	public  BookingDto createBooking(BookingRequestDto bookingRequest) {
 		User user = userRepository.findById(bookingRequest.getUserId())
 				.orElseThrow(()-> new ResourceNotFoundException("User Not Found"));
