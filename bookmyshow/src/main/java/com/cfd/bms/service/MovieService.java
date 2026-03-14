@@ -35,6 +35,13 @@ public class MovieService {
 				.collect(Collectors.toList());
 
 	}
+
+	public List<MovieDto> getMovieByLanguage(String language){
+		List<Movie> movies = movieRepository.findByLanguage(language);
+		return movies.stream()
+				.map(this::mapToDto)
+				.collect(Collectors.toList());
+	}
 	private MovieDto mapToDto(Movie movie)
 	{
 		MovieDto movieDto=new MovieDto();
