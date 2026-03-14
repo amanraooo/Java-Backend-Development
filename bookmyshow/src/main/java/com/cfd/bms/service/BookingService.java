@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -83,6 +84,19 @@ public class BookingService {
 				);
 		showSeatRepository.saveAll(selectedSeats);
 		return mapToBookingDto(saveBooking,selectedSeats);
+	}
+
+	public BookingDto getBookingById(Long id){
+		Optional<Booking> booking = bookingRepository.findById(id)
+			.orElseThrow(()-> new ResourceNotFoundException("Booking not Found"));
+
+			List<ShowSeat> seats = showSeatRepository.findAll()
+		.stream()
+					.filter(seat->
+							seat.getBooking()!=null && seat.getBooking().getId().equals(booking.getId()))
+					.collect(Collectors.toList());
+
+			return mapToBookingDto(booking,seats);
 	}
 
 	private BookingDto mapToBookingDto(Booking booking, List<ShowSeat> seats)
