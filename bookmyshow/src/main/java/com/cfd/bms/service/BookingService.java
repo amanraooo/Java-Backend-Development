@@ -123,6 +123,32 @@ public class BookingService {
 
 	}
 
+	@Transactional
+	public BookingDto cancelBooking(Long id){
+		Booking booking = bookingRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Booking Not Found"));
+
+		booking.setStatus("CANCALLED");
+
+		List<ShowSeat> seats = showSeatRepository.findAll()
+				.stream()
+				.filter(seat -> seat.getBooking()!=null && seat.getBooking().getId().equals(booking.getId()))
+				.collect(Collectors.toList());
+
+		seats.forEach(seat->{
+			seat.setStatus("AVAILABLE");
+			seat.setBooking(null);
+		});
+
+		if(booking.getPayment()!=null){
+			booking.getPayment().setStatus("REFUNDED");
+		}
+
+		Booking  updateBooking = bookingRepository.save(booking);
+		showSeatRepository.saveAll(seats);
+
+		return mapToBookingDto(updateBooking,seats);
+	}
 	private BookingDto mapToBookingDto(Booking booking, List<ShowSeat> seats)
 	{
 		BookingDto bookingDto = new BookingDto();
