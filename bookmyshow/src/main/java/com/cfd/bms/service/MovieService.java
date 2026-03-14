@@ -42,6 +42,44 @@ public class MovieService {
 				.map(this::mapToDto)
 				.collect(Collectors.toList());
 	}
+
+	public List<MovieDto> getMovieByGenre(String genre){
+		List<Movie> movies = movieRepository.findByGenre(genre);
+		return movies.stream()
+				.map(this::mapToDto)
+				.collect(Collectors.toList());
+	}
+
+	public List<MovieDto> searchMovies(String title){
+		List<Movie> movies = movieRepository.findByTitleContaining(title);
+		return movies.stream()
+				.map(this::mapToDto)
+				.collect(Collectors.toList());
+	}
+
+	public MovieDto updateMovie(Long id ,MovieDto movieDto){
+		Movie movie = movieRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Movie Not Found"));
+
+		movie.setTitle(movieDto.getTitle());
+		movie.setDescription(movieDto.getDescription());
+		movie.setLanguage(movieDto.getLanguage());
+		movie.setGenre(movieDto.getGenre());
+		movie.setDurationMins(movieDto.getDurationMins());
+		movie.setReleaseDate(movieDto.getReleaseDate());
+		movie.setPosterUrl(movieDto.getPosterUrl());
+
+		Movie updatedMovie = movieRepository.save(movie);
+		return mapToDto(updatedMovie);
+	}
+
+	public void deleteMovie(Long id){
+		Movie movie = movieRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Movie Not Found with id: "+ id));
+
+		movieRepository.delete(movie);
+	}
+
 	private MovieDto mapToDto(Movie movie)
 	{
 		MovieDto movieDto=new MovieDto();
@@ -69,3 +107,4 @@ public class MovieService {
 		return movie;
 	}
 }
+
