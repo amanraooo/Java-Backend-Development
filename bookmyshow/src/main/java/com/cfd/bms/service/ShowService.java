@@ -1,9 +1,6 @@
 package com.cfd.bms.service;
 
-import com.cfd.bms.dto.MovieDto;
-import com.cfd.bms.dto.ScreenDto;
-import com.cfd.bms.dto.ShowDto;
-import com.cfd.bms.dto.TheaterDto;
+import com.cfd.bms.dto.*;
 import com.cfd.bms.exception.ResourceNotFoundException;
 import com.cfd.bms.model.Movie;
 import com.cfd.bms.model.Screen;
@@ -16,6 +13,7 @@ import com.cfd.bms.repository.ShowSeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShowService {
 
@@ -86,6 +84,26 @@ public class ShowService {
 				show.getScreen().getTotalSeats(),
 				theaterDto
 		));
+
+		List<ShowSeatDto> seatDtos= availableSeats.stream()
+				.map(seat->{
+					ShowSeatDto seatDto=new ShowSeatDto();
+					seatDto.setId(seat.getId());
+					seatDto.setStatus(seat.getStatus());
+					seatDto.setPrice(seat.getPrice());
+
+					SeatDto baseSeatDto=new SeatDto();
+					baseSeatDto.setId(seat.getSeat().getId());
+					baseSeatDto.setSeatNumber(seat.getSeat().getSeatNumber());
+					baseSeatDto.setSeatType(seat.getSeat().getSeatType());
+					baseSeatDto.setBasePrice(seat.getSeat().getBasePrice());
+					seatDto.setSeat(baseSeatDto);
+					return seatDto;
+				})
+				.collect(Collectors.toList());
+
+		showDto.setAvailableSeats(seatDtos);
+		return showDto;
 
 
 	}
