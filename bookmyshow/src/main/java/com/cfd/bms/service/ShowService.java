@@ -48,7 +48,7 @@ public class ShowService {
 
 		List<ShowSeat> availableSeats =
 				showSeatRepository.findByShowIdAndStatus(savedShow.getId(), "AVAILABLE");
-		return
+		return mapToDto(show,availableSeats);
 
 
 	}
