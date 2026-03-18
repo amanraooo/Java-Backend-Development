@@ -12,8 +12,11 @@ import com.cfd.bms.repository.ShowRepository;
 import com.cfd.bms.repository.ShowSeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Nodes.collect;
 
 public class ShowService {
 
@@ -61,6 +64,51 @@ public class ShowService {
 
 		return mapToDto(show,availableSeats);
 	}
+
+	public List<ShowDto> getAllShows()
+	{
+		List<Show> shows=showRepository.findAll();
+		return shows.stream()
+				.map(show -> {
+					List<ShowSeat> availableSeats = showSeatRepository.findByShowIdAndStatus(show.getId(), "AVAILABLE");
+					return mapToDto(show,availableSeats);
+				})
+				.collect(Collectors.toList());
+	}
+
+	public List<ShowDto> getShowByMovie(Long movieId){
+		List<Show> shows = showRepository.findByMovieId(movieId);
+
+		return shows.stream()
+				.map(show -> {
+					List<ShowSeat> availableSeats = showSeatRepository.findByShowIdAndStatus(show.getId(), "AVAILABLE");
+					return mapToDto(show,availableSeats);
+				})
+				.collect(Collectors.toList());
+	}
+
+	public List<ShowDto> getShowsByMovieAndCity(long movieId, String city){
+		List<Show> shows = showRepository.findByMovie_IdAndScreen_Theater_City(movieId,city);
+
+		return shows.stream()
+				.map(show -> {
+					List <ShowSeat> availableSeats = showSeatRepository.findByShowIdAndStatus(show.getId(), "AVILABLE");
+					return mapToDto(show, availableSeats);
+				})
+				.collect(Collectors.toList());
+	}
+
+	public List<ShowDto> getShowsByDateRange(LocalDateTime startDate, LocalDateTime endDate)
+	{
+		List<Show> shows=showRepository.findByStartTimeBetween(startDate,endDate);
+		return shows.stream()
+				.map(show -> {
+					List<ShowSeat> availableSeats = showSeatRepository.findByShowIdAndStatus(show.getId(), "AVAILABLE");
+					return mapToDto(show,availableSeats);
+				})
+				.collect(Collectors.toList());
+	}
+
 	private ShowDto mapToDto(Show show, List<ShowSeat> availableSeats){
 		ShowDto showDto = new ShowDto();
 		showDto.setId(show.getId());
