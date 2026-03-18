@@ -1,6 +1,7 @@
 package com.cfd.bms.service;
 
 import com.cfd.bms.dto.TheaterDto;
+import com.cfd.bms.exception.ResourceNotFoundException;
 import com.cfd.bms.model.Theater;
 import com.cfd.bms.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,14 @@ public class TheaterService {
 		Theater theater = mapToEntity(theaterDto);
 		Theater savedTheater = theaterRepository.save(theater);
 		return mapToDto(savedTheater);
+	}
+
+	public TheaterDto getTheaterById(Long id){
+		Theater theater = theaterRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Theater not found with id  "+ id));
+
+		return mapToDto(theater);
+
 	}
 
 	private TheaterDto mapToDto(Theater theater) {
