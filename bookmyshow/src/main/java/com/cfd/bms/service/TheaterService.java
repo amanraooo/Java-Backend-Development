@@ -7,6 +7,9 @@ import com.cfd.bms.repository.TheaterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TheaterService {
 
@@ -26,6 +29,24 @@ public class TheaterService {
 		return mapToDto(theater);
 
 	}
+
+	private List<TheaterDto> getAllTheater(){
+		 List<Theater> theaters= theaterRepository.findAll();
+		 return theaters.stream()
+				 .map(this::mapToDto)
+				 .collect(Collectors.toList());
+	}
+
+	private List<TheaterDto> getAllTheaterByCity(String city){
+		List<Theater> theaters= theaterRepository.findByCity(city);
+		return theaters.stream()
+				.map(this::mapToDto)
+				.collect(Collectors.toList());
+	}
+
+	//TODO
+	//update
+	//delete
 
 	private TheaterDto mapToDto(Theater theater) {
 		TheaterDto theaterDto = new TheaterDto();
