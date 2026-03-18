@@ -50,9 +50,17 @@ public class ShowService {
 				showSeatRepository.findByShowIdAndStatus(savedShow.getId(), "AVAILABLE");
 		return mapToDto(show,availableSeats);
 
-
 	}
 
+	public ShowDto getShowById(Long id){
+		Show show = showRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("Show not found with id "+ id));
+
+		List<ShowSeat> availableSeats =
+				showSeatRepository.findByShowIdAndStatus(show.getId(), "AVAILABLE");
+
+		return mapToDto(show,availableSeats);
+	}
 	private ShowDto mapToDto(Show show, List<ShowSeat> availableSeats){
 		ShowDto showDto = new ShowDto();
 		showDto.setId(show.getId());
