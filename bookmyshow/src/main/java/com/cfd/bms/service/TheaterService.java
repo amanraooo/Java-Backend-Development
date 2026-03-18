@@ -14,6 +14,19 @@ public class TheaterService {
 
 	public TheaterDto createTheater(TheaterDto theaterDto){
 		Theater theater = mapToEntity(theaterDto);
+		Theater savedTheater = theaterRepository.save(theater);
+		return mapToDto(savedTheater);
+	}
+
+	private TheaterDto mapToDto(Theater theater) {
+		TheaterDto theaterDto = new TheaterDto();
+		theaterDto.setId(theater.getId());
+		theaterDto.setName(theater.getName());
+		theaterDto.setCity(theater.getCity());
+		theaterDto.setAddress(theater.getAddress());
+		theaterDto.setTotalScreens(theater.getTotalScreens());
+		theaterDto.setTotalScreens(theater.getTotalScreens());
+		return theaterDto;
 	}
 
 	private Theater mapToEntity(TheaterDto theaterDto) {
