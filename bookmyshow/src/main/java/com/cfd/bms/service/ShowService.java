@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-
+@Service
 public class ShowService {
 
 	@Autowired
@@ -36,10 +36,11 @@ public class ShowService {
 	public ShowDto createShow(ShowDto showDto){
 		Show show = new Show();
 
-		Movie movie = movieRepository.findById(ShowDto.getMovie().getId())
+
+		Movie movie = movieRepository.findById(showDto.getMovie().getId())
 				.orElseThrow(()-> new ResourceNotFoundException("Movie Not Found"));
 
-		Screen screen = screenRepository.findById(ShowDto.getScreen().getId())
+		Screen screen = screenRepository.findById(showDto.getScreen().getId())
 				.orElseThrow(()-> new ResourceNotFoundException("Screen Not Found"));
 
 		show.setMovie(movie);
