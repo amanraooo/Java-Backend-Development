@@ -22,7 +22,9 @@ public class PaymentController {
 			String res = paymentService.createOrder(order);
 			return ResponseEntity.ok(res);
 
-		}catch(Exception e){
+		}
+
+		catch(Exception e){
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error creating Order");
 		}
