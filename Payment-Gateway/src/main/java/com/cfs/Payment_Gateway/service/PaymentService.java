@@ -46,4 +46,11 @@ public class PaymentService {
 		paymentRepo.save(orderDetails);
 		return razorpayOrder.toString();
 	}
+
+	public void updateOrderStatus(String paymentId, String orderId, String status) {
+		PaymentOrder order = paymentRepo.findByOrderId(orderId);
+		order.setPaymentId(paymentId);
+		order.setStatus(status);
+		paymentRepo.save(order);
+	}
 }
