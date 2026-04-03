@@ -26,14 +26,17 @@ public class PaymentService {
 	@Autowired
 	private PaymentRepo paymentRepo;
 
-	public String createOrder(PaymentOrder orderDetails) throws RazorpayException{
+	@Autowired
+	private EmailService emailService;
+
+	public String createOrder(PaymentOrder orderDetails) throws RazorpayException {
 		RazorpayClient client = new RazorpayClient(keyId, keySecret);
 
 		//json
 		JSONObject orderRequest = new JSONObject();
-		orderRequest.put("amount", orderDetails.getAmount()*100);
+		orderRequest.put("amount", orderDetails.getAmount() * 100);
 		orderRequest.put("Currency", "INR");
-		orderRequest.put("reciept","txn_"+ UUID.randomUUID());
+		orderRequest.put("reciept", "txn_" + UUID.randomUUID());
 
 		Order razorpayOrder = client.orders.create(orderRequest);
 
@@ -52,5 +55,14 @@ public class PaymentService {
 		order.setPaymentId(paymentId);
 		order.setStatus(status);
 		paymentRepo.save(order);
+
+		if ("SUCCESS".equalsIgnoreCase(order.getStatus())) {
+			emailService.sendEmail(
+					order.getEmail(),
+					order.getName(),
+					order.getCourseName(),
+					order.getAmount()
+			);
+		}
 	}
 }
