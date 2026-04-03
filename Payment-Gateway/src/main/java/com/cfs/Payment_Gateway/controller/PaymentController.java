@@ -29,4 +29,14 @@ public class PaymentController {
 					.body("Error in creating Order");
 		}
 	}
+
+	@PostMapping("/update-order")
+	public ResponseEntity<String> updateOrder(@RequestParam String paymentId,
+											  @RequestParam String orderId,
+											  @RequestParam String status
+											  ){
+		paymentService.updateOrderStatus(paymentId,orderId, status);
+		System.out.println("Order place successfully");
+		return ResponseEntity.ok("Order update Successfully");
+	}
 }
