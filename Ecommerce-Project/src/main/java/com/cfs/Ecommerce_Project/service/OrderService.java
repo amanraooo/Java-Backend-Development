@@ -33,7 +33,7 @@ public class OrderService {
 		order.setUser(user);
 		order.setOrderDate(new Date());
 		order.setStatus("Pending");
-		order.setTotalAmount(totalAmount);
+		order.setTotalAmounnt(totalAmount);
 
 		List<OrderItem> orderItems = new ArrayList<>();
 		List<OrderItemDto> orderItemDTOS = new ArrayList<>();
