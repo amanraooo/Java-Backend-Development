@@ -43,15 +43,15 @@ public class OrderService {
 					.orElseThrow(()->new RuntimeException("Product Not Found"));
 
 			OrderItem orderItem = new OrderItem();
-			orderItem.setOrder(order);
+			orderItem.setOrders(order);
 			orderItem.setProduct(product);
 			orderItem.setQuantity(entry.getValue());
 			orderItems.add(orderItem);
 			orderItemDTOS.add(new OrderItemDto(product.getName(), product.getPrice(), entry.getValue()));
 		}
-		order.setOrderItems(orderItems);
+		order.setOrderItem(orderItems);
 		Orders saveOrder = orderRepository.save(order);
-		return new OrderDto(saveOrder.getId(), saveOrder.getTotalAmount(),
+		return new OrderDto(saveOrder.getId(), saveOrder.getTotalAmounnt(),
 				saveOrder.getStatus(), saveOrder.getOrderDate(), orderItemDTOS);
 	}
 
@@ -61,14 +61,14 @@ public class OrderService {
 	}
 
 	public OrderDto convertToDTO(Orders orders) {
-		List<OrderItemDto> orderItems = orders.getOrderItems().stream()
+		List<OrderItemDto> orderItems = orders.getOrderItem().stream()
 				.map(item-> new OrderItemDto(
 						item.getProduct().getName(),
 						item.getProduct().getPrice(),
 						item.getQuantity())).collect(Collectors.toList());
 		return new OrderDto(
 				orders.getId(),
-				orders.getTotalAmount(),
+				orders.getTotalAmounnt(),
 				orders.getStatus(),
 				orders.getOrderDate(),
 				orders.getUser() != null ? orders.getUser().getName() : "Unknown",
