@@ -1,4 +1,9 @@
 package com.cfs.Ecommerce_Project.repo;
 
-public interface UserRepository {
+import com.cfs.Ecommerce_Project.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User,Long> {
+	User findByEmail(String email);
+
 }
