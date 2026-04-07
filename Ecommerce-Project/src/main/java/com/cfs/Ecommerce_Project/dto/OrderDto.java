@@ -13,13 +13,13 @@ public class OrderDto {
 	private Long id ;
 	private String userName;
 	private String email;
-	private double totalAmounnt;
+	private double totalAmount;
 	private String status;
 	private Date orderDate;
 
 	private List<OrderItemDto> orderItems;
 
-	public OrderDTO(Long id, double totalAmount, String status, Date orderDate, String userName, String email, List<OrderItemDTO> orderItems) {
+	public OrderDto(Long id, double totalAmount, String status, Date orderDate, String userName, String email, List<OrderItemDto> orderItems) {
 		this.id = id;
 		this.totalAmount = totalAmount;
 		this.status = status;
@@ -28,7 +28,7 @@ public class OrderDto {
 		this.email = email;
 		this.orderItems = orderItems;
 	}
-	public OrderDTO(Long id, double totalAmount, String status, Date orderDate, String userName, String email) {
+	public OrderDto(Long id, double totalAmount, String status, Date orderDate, String userName, String email) {
 		this.id = id;
 		this.totalAmount = totalAmount;
 		this.status = status;
@@ -37,7 +37,7 @@ public class OrderDto {
 		this.email = email;
 		this.orderItems = orderItems;
 	}
-	public OrderDTO(Long id, double totalAmount, String status, Date orderDate, List<OrderItemDTO> orderItems) {
+	public OrderDto(Long id, double totalAmount, String status, Date orderDate, List<OrderItemDto> orderItems) {
 		this.id = id;
 		this.totalAmount = totalAmount;
 		this.status = status;
@@ -69,12 +69,12 @@ public class OrderDto {
 		this.email = email;
 	}
 
-	public double getTotalAmounnt() {
-		return totalAmounnt;
+	public double getTotalAmount() {
+		return totalAmount;
 	}
 
-	public void setTotalAmounnt(double totalAmounnt) {
-		this.totalAmounnt = totalAmounnt;
+	public void setTotalAmount(double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 	public String getStatus() {
