@@ -3,16 +3,14 @@ package com.cfs.ResumeAnalyzer_AI.controller;
 import org.apache.tika.Tika;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/resume")
+@CrossOrigin("*")
 public class ResumeController {
 
 	private final ChatClient chatClient;
@@ -24,8 +22,8 @@ public class ResumeController {
 	}
 
 	@PostMapping("/analyzer")
-	public Map<String, Object> analyzer(@RequestParam("file")MultipartFile file) throws Exception{
-
+	public Map<String, Object> analyzer(@RequestParam("file")MultipartFile file) throws Exception
+	{
 		String content = tika.parseToString(file.getInputStream());
 
 		String prompt = """
@@ -44,6 +42,5 @@ public class ResumeController {
 				.content();
 
 		return Map.of("analysis", aiResponse);
-
 	}
 }
