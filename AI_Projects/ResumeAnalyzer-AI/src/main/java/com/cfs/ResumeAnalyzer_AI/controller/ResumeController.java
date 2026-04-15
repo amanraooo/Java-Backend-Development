@@ -44,7 +44,7 @@ public class ResumeController {
 		return Map.of("analysis", aiResponse);
 	}
 
-	@PostMapping("/analyzer")
+	@PostMapping("/analyze-ATS")
 	public Map<String, Object> analyzeATS(@RequestParam("file")MultipartFile file,
 										  @RequestParam("jd") String jobDescription) throws Exception
 	{
