@@ -18,8 +18,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 		this.geminiWebSocketHandler= geminiWebSocketHandler;
 	}
 
-
-
+	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry){
 		registry.addHandler(geminiWebSocketHandler, "/chat").setAllowedOrigins("*");
 	}
