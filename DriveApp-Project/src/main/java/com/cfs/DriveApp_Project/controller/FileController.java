@@ -1,14 +1,18 @@
 package com.cfs.DriveApp_Project.controller;
 
+import com.cfs.DriveApp_Project.entity.FileEntity;
 import com.cfs.DriveApp_Project.service.FileServiceStorage;
+import jakarta.annotation.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/files")
@@ -21,12 +25,59 @@ public class FileController {
 		this.fileServiceStorage = fileServiceStorage;
 	}
 
+	@PostMapping("/uploadfile")
 	public ResponseEntity<String> uploadFile(@RequestParam("file")MultipartFile file,
-											 @RequestParam(value = "parentFolderId", required = false) Long parentFolderId){
-		try{
-			String response = fileServiceStorage.saveFile(file,parentFolderId);
+											 @RequestParam(value = "parentFolderId", required = false)
+											 Long parentFolderId)
+	{
+		try {
+			String response = fileServiceStorage.saveFile(file, parentFolderId);
 		} catch (Exception e) {
 			return ResponseEntity.status(500).body("File upload failed");
+		}
+	}
+
+	@GetMapping("/download/{id}")
+	public ResponseEntity<Resource> downloadFile(@PathVariable Long id){
+		try{
+			FileEntity fileEntity = fileServiceStorage.getFileById(id);
+			Path path = Paths.get(fileEntity.getPath());
+			Resource resource = new UrlResource(path.toUri());
+			return ResponseEntity.ok()
+					.header("content-Disposition", "attachment; filename=\""+fileEntity.getName()+ "\"")
+					.body(resource);
+		} catch (Exception e) {
+			return ResponseEntity.status(404).build();
+		}
+	}
+
+	@GetMapping("/list")
+	public ResponseEntity<List<FileEntity>> listFiles(
+			@RequestParam(value = "parentFolderId", required = false) Long parentfolderId){
+
+		List<FileEntity> files;
+		if(parentfolderId==null){
+			files= fileServiceStorage.getFilesInFolder(null);
+		}
+		else{
+			files=fileServiceStorage.getFilesInFolder(parentfolderId);
+		}
+		return ResponseEntity.ok(files);
+	}
+
+	@DeleteMapping("/deletefile")
+	public ResponseEntity<String> deleteFile(@PathVariable Long id){
+		try{
+			//will take path from mysql
+			FileEntity fileEntity= fileServiceStorage.getFileById(id);
+
+			//will make path and delete from disk
+			Path path = Paths.get(fileEntity.getPath());
+			Files.deleteIfExists(path);
+			return ResponseEntity.ok("File deleted successfully");
+		}
+		catch(Exception e){
+			return ResponseEntity.status(500).body("Failed to delete file");
 		}
 	}
 }
