@@ -57,6 +57,7 @@ public class  FileServiceStorage {
 	}
 
 	public List<FileEntity> getFilesInFolder(Long parentFolderId){
+
 		if(parentFolderId==null){
 			return fileRepository.findAll()
 					.stream()
@@ -64,6 +65,7 @@ public class  FileServiceStorage {
 					.collect(Collectors.toList());
 		}
 		else{
+
 			return fileRepository.findAll()
 					.stream()
 					.filter(f->parentFolderId.equals(f.getParentFolderId()))
@@ -71,5 +73,12 @@ public class  FileServiceStorage {
 		}
 	}
 
+	public FileEntity getFileById(Long id) {
+		return fileRepository.findById(id).orElseThrow(()-> new RuntimeException("File not found"));
+	}
+
+	public void deleteById(Long id){
+		fileRepository.deleteById(id);
+	}
 
 }
