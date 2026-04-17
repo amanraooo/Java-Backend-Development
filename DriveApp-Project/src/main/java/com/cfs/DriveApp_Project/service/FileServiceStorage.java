@@ -7,11 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class  FileServiceStorage {
@@ -26,7 +29,7 @@ public class  FileServiceStorage {
 		this.fileRepository = fileRepository;
 	}
 
-	public  String saveFile(MultipartFile file, Long parentFolderId){
+	public  String saveFile(MultipartFile file, Long parentFolderId) throws IOException {
 		Path uploadPath = Paths.get(uploadDir);
 
 		if(!File.exists(uploadPath)){
@@ -52,4 +55,21 @@ public class  FileServiceStorage {
 		return "File Uploaded Successfully";
 
 	}
+
+	public List<FileEntity> getFilesInFolder(Long parentFolderId){
+		if(parentFolderId==null){
+			return fileRepository.findAll()
+					.stream()
+					.filter(f->f.getParentFolderId()==null)
+					.collect(Collectors.toList());
+		}
+		else{
+			return fileRepository.findAll()
+					.stream()
+					.filter(f->parentFolderId.equals(f.getParentFolderId()))
+					.collect(Collectors.toList());
+		}
+	}
+
+
 }
